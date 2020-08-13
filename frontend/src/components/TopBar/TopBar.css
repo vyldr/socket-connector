@@ -1,0 +1,54 @@
+.TopBar {
+	background-color: #09d;
+	height: 3.5rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	/* padding: 0.5rem; */
+	justify-content: space-between;
+}
+
+/* An empty space to bring balance to the flexbox */
+.space {
+	height: 3rem;
+	flex: 0 80 10rem;
+}
+
+.title {
+	width: 8rem;
+	flex: 0 2 auto;
+	text-align: center;
+	padding: 0.5rem;
+	font-weight: bold;
+	font-size: large;
+	color: #fff;
+	background-color: #00000088;
+	border-radius: 0.3rem;
+	height: 1.1rem;
+}
+
+.buttonContainer {
+	flex: 0 1 10rem;
+	display: flex;
+	margin-left: 0.5rem;
+}
+
+button {
+	margin-right: 0.5rem;
+	height: 2.1rem;
+	flex: 1 1 auto;
+	color: #fff;
+	background-color: #00000020;
+	border: 1px solid #fff;
+	border-radius: 0.3rem;
+	transition-duration: 0.15s;
+}
+
+button:hover {
+	background-color: #00000044;
+}
+
+button:focus {
+	background-color: #00000088;
+	outline: 0;
+}
