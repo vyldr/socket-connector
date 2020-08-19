@@ -1,7 +1,5 @@
-.TopBar {
-	position: fixed;
-	top: 0;
-	width: 100%;
+html, body, #root, .App {
+	height: 100%;
 }
 
 body {

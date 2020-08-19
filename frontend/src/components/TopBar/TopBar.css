@@ -1,11 +1,15 @@
 .TopBar {
-	background-color: #09d;
+	/* background-color: #0099dd; */
+	background-color: #348d00;
 	height: 3.5rem;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	/* padding: 0.5rem; */
 	justify-content: space-between;
+	position: fixed;
+	top: 0;
+	width: 100%;
 }
 
 /* An empty space to bring balance to the flexbox */
@@ -33,7 +37,7 @@
 	margin-left: 0.5rem;
 }
 
-button {
+.TopBarButton {
 	margin-right: 0.5rem;
 	height: 2.1rem;
 	flex: 1 1 auto;

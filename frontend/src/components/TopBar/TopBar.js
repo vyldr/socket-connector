@@ -9,8 +9,8 @@ function TopBar() {
 				Socket Hub
 			</code>
 			<div className='buttonContainer'>
-				<button>Control</button>
-				<button>Sign In</button>
+				<button className='TopBarButton'>Control</button>
+				<button className='TopBarButton'>Sign In</button>
 			</div>
 		</div>
 	);

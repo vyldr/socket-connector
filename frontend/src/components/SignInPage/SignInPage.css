@@ -1,0 +1,67 @@
+.SignInPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    min-height: 16rem;
+}
+
+.SignInForm {
+    margin: 1rem;
+    margin-top: 4rem;
+    border: 1px solid #000;
+    border-radius: 0.3rem;
+    padding: 1rem;
+    color: #fff;
+    background-color: #383838;
+}
+
+.formTitle {
+    margin: auto;
+    text-align: center;
+    font-weight: bold;
+    background-color: #00000088;
+    width: 6rem;
+    padding: 0.3rem;
+    border-radius: 0.3rem;
+}
+
+.SignInPage input {
+    color: #fff;
+    background-color: #00000000;
+    border: 1px solid #fff;
+    border-radius: 0.3rem;
+    padding: 0.6rem;
+    margin-top: 1rem;
+    outline: none;
+    transition-duration: 0.15s;
+    caret-color: #57eb02;
+}
+
+.SignInPage input:hover {
+    background-color: #00000022;
+}
+
+.SignInPage input:focus {
+    border-color: #57eb02;
+    background-color: #00000044;
+}
+
+.SignInButton {
+    width: 100%;
+    margin-top: 1rem;
+    background-color: #00000022;
+    border: 1px solid #57eb02;
+    border-radius: 0.3rem;
+    padding: 0.6rem;
+    color: #fff;
+    transition-duration: 0.15s;
+}
+
+.SignInButton:focus {
+    background-color: #348d00;
+}
+
+.SignInButton:active {
+    background-color: #00000088;
+}

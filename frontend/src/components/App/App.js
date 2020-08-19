@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
 
-import TopBar from '../TopBar/TopBar'
+import TopBar from '../TopBar/TopBar';
+import SignInPage from '../SignInPage/SignInPage';
 
 function App() {
 	return (
 		<div className="App">
-			<div className='TopBar'>
-				<TopBar />
-			</div>
+			<TopBar />
+			<SignInPage />
 		</div>
 	);
 }
