@@ -16,7 +16,7 @@
     background-color: #383838;
 }
 
-.formTitle {
+.ControlPage .formTitle {
     margin: auto;
     text-align: center;
     font-weight: bold;
@@ -56,12 +56,13 @@
     padding: 0.6rem;
     color: #fff;
     transition-duration: 0.15s;
+    outline: none;
 }
 
-.MessageButton:focus {
-    background-color: #348d00;
+.MessageButton:hover {
+    background-color: #00000044;
 }
 
 .MessageButton:active {
-    background-color: #00000088;
+    background-color: #57eb0266;
 }

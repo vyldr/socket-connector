@@ -32,7 +32,7 @@
 }
 
 .buttonContainer {
-	flex: 0 1 10rem;
+	flex: 0 1 auto;
 	display: flex;
 	margin-left: 0.5rem;
 }
@@ -40,19 +40,19 @@
 .TopBarButton {
 	margin-right: 0.5rem;
 	height: 2.1rem;
-	flex: 1 1 auto;
+	width: 4rem;
 	color: #fff;
 	background-color: #00000020;
 	border: 1px solid #fff;
 	border-radius: 0.3rem;
 	transition-duration: 0.15s;
+	outline: 0;
 }
 
-button:hover {
+.TopBarButton:hover {
 	background-color: #00000044;
 }
 
-button:focus {
+.TopBarButton:active {
 	background-color: #00000088;
-	outline: 0;
 }
