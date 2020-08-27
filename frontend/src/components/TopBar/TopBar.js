@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+	Link
+} from 'react-router-dom';
+
 import './TopBar.css';
 
 function TopBar() {
@@ -9,8 +13,12 @@ function TopBar() {
 				Socket Hub
 			</code>
 			<div className='buttonContainer'>
-				<button className='TopBarButton'>Control</button>
-				<button className='TopBarButton'>Sign In</button>
+				<Link to='/control'>
+					<button className='TopBarButton'>Control</button>
+				</Link>
+				<Link to='/signin'>
+					<button className='TopBarButton'>Sign In</button>
+				</Link>
 			</div>
 		</div>
 	);
