@@ -3,12 +3,14 @@ import './App.css';
 
 import TopBar from '../TopBar/TopBar';
 import SignInPage from '../SignInPage/SignInPage';
+import ControlPage from '../ControlPage/ControlPage';
 
 function App() {
 	return (
 		<div className="App">
 			<TopBar />
-			<SignInPage />
+			{/* <SignInPage /> */}
+			<ControlPage />
 		</div>
 	);
 }
