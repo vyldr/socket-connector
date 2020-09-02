@@ -1,16 +1,17 @@
 import React from 'react';
-import './ControlPage.css';
+import '../../style.css';
+// import './ControlPage.css';
 
 class ControlPage extends React.Component {
 	render() {
 		return (
-			<div className='ControlPage'>
-				<div className='ControlForm'>
+			<div className='page'>
+				<div className='centerForm'>
 					<div className='formTitle'>
 						<code>Send a message</code>
 					</div>
 					<input placeholder='Message'></input><br />
-					<button className='MessageButton'>Send</button>
+					<button className='formButton'>Send</button>
 
 				</div>
 			</div>

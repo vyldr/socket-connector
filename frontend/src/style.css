@@ -1,0 +1,69 @@
+/* Keep page content centered */
+.page {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	min-height: 16rem;
+}
+
+/* Most pages will have one of these in the center */
+.centerForm {
+	margin: 1rem;
+	margin-top: 4rem;
+	border: 1px solid #000;
+	border-radius: 0.3rem;
+	padding: 1rem;
+	color: #fff;
+	background-color: #383838;
+}
+
+.formTitle {
+	margin: auto;
+	text-align: center;
+	font-weight: bold;
+	background-color: #00000088;
+	padding: 0.3rem;
+	border-radius: 0.3rem;
+}
+
+input {
+	color: #fff;
+	background-color: #00000000;
+	border: 1px solid #fff;
+	border-radius: 0.3rem;
+	padding: 0.6rem;
+	margin-top: 1rem;
+	outline: none;
+	transition-duration: 0.15s;
+	caret-color: #57eb02;
+}
+
+input:hover {
+	background-color: #00000022;
+}
+
+input:focus {
+	border-color: #57eb02;
+	background-color: #00000044;
+}
+
+.formButton {
+	width: 100%;
+	margin-top: 1rem;
+	background-color: #00000022;
+	border: 1px solid #57eb02;
+	border-radius: 0.3rem;
+	padding: 0.6rem;
+	color: #fff;
+	transition-duration: 0.15s;
+	outline: none;
+}
+
+.formButton:hover {
+	background-color: #00000044;
+}
+
+.formButton:active {
+	background-color: #57eb0266;
+}
