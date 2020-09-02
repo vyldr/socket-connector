@@ -15,7 +15,12 @@ class ControlPage extends React.Component {
 
 	componentDidMount() {
 		// Open our WebSocket connection
-		this.ws = new WebSocket('ws://' + document.location.host + '/ws',);
+		if (document.location.protocol === 'http:') {
+			this.ws = new WebSocket('ws://' + document.location.host + '/ws',);
+		} else {
+			this.ws = new WebSocket('wss://' + document.location.host + '/ws',);
+		}
+
 
 		// The connection is open
 		this.ws.onopen = () => {

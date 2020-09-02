@@ -11,4 +11,4 @@ EXPOSE 3000
 COPY . .
 
 # Run
-CMD ["npm", "start"]
+CMD ["npm", "run", "start-prod"]
