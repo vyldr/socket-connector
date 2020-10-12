@@ -7,29 +7,34 @@ class ControlPage extends React.Component {
 		super(props);
 		this.state = {
 			message: '',
+			channel: 'example-channel-1234',
 		};
 
 		this.handleChange = this.handleChange.bind(this);
-		this.sendMessage = this.sendMessage.bind(this);
+		this.sendMessageBox = this.sendMessageBox.bind(this);
 	}
 
 	componentDidMount() {
-		// Open our WebSocket connection
+		// Set the correct protocol
+		var protocol = 'wss://';
 		if (document.location.protocol === 'http:') {
-			this.ws = new WebSocket('ws://' + document.location.host + '/ws',);
-		} else {
-			this.ws = new WebSocket('wss://' + document.location.host + '/ws',);
+			protocol = 'ws://';
 		}
 
+		// Open our WebSocket connection
+		this.ws = new WebSocket(protocol + document.location.host + '/ws');
 
 		// The connection is open
 		this.ws.onopen = () => {
 			console.log('connected');
+
+			// Authenticate
+			this.send(this.state.channel);
 		};
 
 		// Received a message from the sercer
 		this.ws.onmessage = (event) => {
-			var message = JSON.parse(event.data);
+			var message = event.data;
 			console.log('From Server:', message);
 		};
 	}
@@ -41,9 +46,14 @@ class ControlPage extends React.Component {
 	}
 
 	// Send a message to the server
-	sendMessage() {
-		this.ws.send(this.state.message);
-		console.log('To Server:  ', this.state.message);
+	send(message) {
+		this.ws.send(message);
+		console.log('To Server:  ', message);
+	}
+
+	// Send the contents of the message box
+	sendMessageBox() {
+		this.send(this.state.message);
 		this.setState({ message: '' });
 	}
 
@@ -68,7 +78,7 @@ class ControlPage extends React.Component {
 
 					{/* Send button */}
 					<button className='formButton'
-						onClick={this.sendMessage}>
+						onClick={this.sendMessageBox}>
 						Send
 					</button>
 
