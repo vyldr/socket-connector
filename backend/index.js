@@ -84,7 +84,20 @@ wss.on('connection', (ws) => {
 
 	// Log disconnect
 	ws.on('close', () => {
+
+		// Remove the connection from the channel
+		for (var i = ws.channel.length; i >= 0; i--) {
+			if (ws.channel[i] == ws) {
+				ws.channel.splice(i, 1);
+			}
+		}
 		console.log('WebSocket disconnect')
+
+		// Remove empty channel
+		if (ws.channel.length === 0) {
+			delete channels[ws.channelName];
+			console.log('delet this:', ws.channelName);
+		}
 	});
 
 	// Log connection
