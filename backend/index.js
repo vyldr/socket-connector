@@ -71,14 +71,13 @@ wss.on('connection', (ws) => {
 			console.log('Subscribed to channel:', ws.channelName);
 
 
-			// Handle messages
+		// Send the message to all other channel members
 		} else {
-			console.log('Received:', message);
-
-			// Thank the client for its message
-			var response = 'Thank you for ' + message;
-			ws.send(response);
-			console.log('Sent:     ' + response);
+			for (var i = 0; i < ws.channel.length; i++) {
+				if (ws.channel[i] != ws) {
+					ws.channel[i].send(message);
+				}
+			}
 		}
 	});
 
@@ -96,7 +95,7 @@ wss.on('connection', (ws) => {
 		// Remove empty channel
 		if (ws.channel.length === 0) {
 			delete channels[ws.channelName];
-			console.log('delet this:', ws.channelName);
+			console.log('Remove channel:', ws.channelName);
 		}
 	});
 
