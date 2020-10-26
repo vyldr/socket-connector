@@ -2,13 +2,125 @@ const express = require('express');
 const WebSocket = require('ws');
 const http = require('http');
 const path = require('path');
+const { v4: uuid } = require('uuid');
+const session = require('express-session')
+const FileStore = require('session-file-store')(session);
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt-nodejs');
+const { Client } = require('pg');
 
 const PORT = process.env.PORT || 3001;
+
+// Set up the database
+const database = new Client({
+	connectionString: process.env.DATABASE_URL,
+	ssl: {
+		rejectUnauthorized: false
+	}
+});
+database.connect();
+
+// Set up passport.js with the local strategy
+passport.use(new LocalStrategy(
+	(username, password, done) => {
+
+		// Look up the user in the database
+		var query = 'SELECT * FROM users WHERE username = $1;';
+		var values = [username];
+
+		database.query(query, values, (err, dbres) => {
+
+			// Something went wrong
+			if (err) {
+				console.log(err.stack);
+				return done(null, false, { message: 'Server Error\n' });
+
+				// Check if the user can sign in
+			} else {
+
+				// Username is incorrect
+				if (dbres.rows.length === 0) {
+					return done(null, false, { message: 'Username or password is incorrect\n' });
+				}
+
+				// Everything looks good
+				user = dbres.rows[0];
+				if (username === user.username && bcrypt.compareSync(password, user.password)) {
+					return done(null, user);
+
+					// Password is incorrect
+				} else {
+					return done(null, false, { message: 'Username or password is incorrect\n' });
+				}
+			}
+		});
+	}
+));
+
+// Serialize and deserialize the user
+passport.serializeUser((user, done) => {
+	done(null, user.username);
+});
+passport.deserializeUser((username, done) => {
+	const user = { username: username };
+	done(null, user);
+});
 
 const app = express();
 const httpServer = http.createServer(app);
 
+// Configure middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(session({
+	genid: (req) => {
+		return uuid() // use UUIDs for session IDs
+	},
+	store: new FileStore(),
+	secret: process.env.SESSIONSECRET,
+	resave: false,
+	saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 // Serve endpoints
+
+// Attempt to authenticate the user
+app.post('/api/signin', (req, res, next) => {
+	passport.authenticate('local', (err, user, info) => {
+		if (info) {
+			return res.send(info.message);
+		}
+		if (err) {
+			return next(err);
+		}
+		req.login(user, (err) => {
+			if (user) {
+				return res.send('You were authenticated & logged in!\n');
+			} else {
+				return res.send('Incorrect username or password\n');
+			}
+		})
+	})(req, res, next);
+})
+
+// Determine if the user is authenticated
+app.get('/api/authrequired', (req, res) => {
+
+	// Yes
+	if (req.isAuthenticated()) {
+		res.send('Authenticated: ' + req.user.username + '\n');
+
+		// No
+	} else {
+		res.send('your unauthorized\n');
+	}
+});
+
 app.get('/api/date', (req, res) => {
 	res.send(JSON.stringify((new Date()).getTime()));
 	console.log('/api/date');

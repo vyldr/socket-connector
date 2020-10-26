@@ -4,15 +4,22 @@
   "description": "Backend for socket-hub",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "nodemon --ignore 'sessions/' index.js",
     "start-prod": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "express": "^4.17.1",
+    "express-session": "^1.17.1",
     "nodemon": "^2.0.4",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "pg": "^8.4.1",
+    "session-file-store": "^1.5.0",
+    "uuid": "^8.3.1",
     "ws": "^7.3.1"
   }
 }
