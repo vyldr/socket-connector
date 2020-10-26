@@ -106,6 +106,12 @@ app.post('/api/signin', (req, res, next) => {
 			}
 		})
 	})(req, res, next);
+});
+
+// Sign out the user
+app.post('/api/signout', (req, res) => {
+	req.logOut();
+	res.send('Signed out\n');
 })
 
 // Determine if the user is authenticated
