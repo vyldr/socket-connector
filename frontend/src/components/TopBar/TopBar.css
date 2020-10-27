@@ -28,7 +28,8 @@
 	color: #fff;
 	background-color: #00000088;
 	border-radius: 0.3rem;
-	height: 1.1rem;
+	border: none;
+	height: 2.1rem;
 }
 
 .buttonContainer {

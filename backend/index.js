@@ -112,18 +112,18 @@ app.post('/api/signin', (req, res, next) => {
 app.post('/api/signout', (req, res) => {
 	req.logOut();
 	res.send('Signed out\n');
-})
+});
 
 // Determine if the user is authenticated
-app.get('/api/authrequired', (req, res) => {
+app.get('/api/signedin', (req, res) => {
 
 	// Yes
 	if (req.isAuthenticated()) {
-		res.send('Authenticated: ' + req.user.username + '\n');
+		res.status(200).send(req.user.username);
 
 		// No
 	} else {
-		res.send('your unauthorized\n');
+		res.status(401).send('your unauthorized\n');
 	}
 });
 
