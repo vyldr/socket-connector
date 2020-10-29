@@ -51,7 +51,7 @@ class TopBar extends React.Component {
 				{/* Title */}
 				<Link to='/'>
 					<button className='title'>
-						Socket Hub
+						Socket Connector
 				</button>
 				</Link>
 
