@@ -93,16 +93,16 @@ app.use(passport.session());
 app.post('/api/signin', (req, res, next) => {
 	passport.authenticate('local', (err, user, info) => {
 		if (info) {
-			return res.send(info.message);
+			return res.status(400).send(info.message);
 		}
 		if (err) {
 			return next(err);
 		}
 		req.login(user, (err) => {
 			if (user) {
-				return res.send('You were authenticated & logged in!\n');
+				return res.status(200).send('You were authenticated & logged in!\n');
 			} else {
-				return res.send('Incorrect username or password\n');
+				return res.status(401).send('Incorrect username or password\n');
 			}
 		})
 	})(req, res, next);

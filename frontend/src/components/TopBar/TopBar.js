@@ -19,7 +19,6 @@ class TopBar extends React.Component {
 		// Check if we are signed in
 		fetch(document.location.origin + '/api/signedin')
 			.then((res) => {
-				console.log(res.status);
 				// Not signed in!
 				if (res.status !== 200) {
 					this.props.history.push('/signin');
