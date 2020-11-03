@@ -89,6 +89,42 @@ app.use(passport.session());
 
 // Serve endpoints
 
+// Create a new account
+app.post('/api/signup', (req, res, next) => {
+
+	// Check if the username exists
+
+	// Build the query
+	var query = 'SELECT EXISTS (SELECT TRUE FROM users where username=$1);';
+	var values = [req.body.username];
+
+	database.query(query, values, (err, dbres) => {
+
+		// Username taken
+		if (dbres.rows[0].exists) {
+			res.status(409).send('Username taken');
+		}
+
+		// Username available
+		else {
+
+			// Generate a password hash
+			bcrypt.genSalt(10, function (err, salt) {
+				bcrypt.hash(req.body.password, salt, null, function (err, hash) {
+
+					// Insert the user into the database
+					var query = "INSERT INTO users (username, password) VALUES ($1, $2);";
+					var values = [req.body.username, hash];
+					database.query(query, values, (err, dbres) => {
+						res.status(201).send('Account created');
+					});
+				});
+			});
+		}
+	});
+
+});
+
 // Attempt to authenticate the user
 app.post('/api/signin', (req, res, next) => {
 	passport.authenticate('local', (err, user, info) => {
@@ -189,7 +225,7 @@ wss.on('connection', (ws) => {
 			console.log('Subscribed to channel:', ws.channelName);
 
 
-		// Send the message to all other channel members
+			// Send the message to all other channel members
 		} else {
 			for (var i = 0; i < ws.channel.length; i++) {
 				if (ws.channel[i] != ws) {

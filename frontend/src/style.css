@@ -67,3 +67,15 @@ input:focus {
 .formButton:active {
 	background-color: #57eb0266;
 }
+
+.hidden {
+	display: none;
+}
+
+.errorMessage {
+	background-color: #cc1f2d;
+	text-align: center;
+	margin-top: 1rem;
+	padding: 0.5rem;
+	border-radius: 0.3rem;
+}
