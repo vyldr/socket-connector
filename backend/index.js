@@ -10,6 +10,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt-nodejs');
 const { Client } = require('pg');
+const Crypto = require('crypto')
 
 const PORT = process.env.PORT || 3001;
 
@@ -81,7 +82,8 @@ app.use(session({
 	store: new FileStore(),
 	secret: process.env.SESSIONSECRET,
 	resave: false,
-	saveUninitialized: true
+	saveUninitialized: true,
+	retries: 0,
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -160,6 +162,70 @@ app.get('/api/signedin', (req, res) => {
 		// No
 	} else {
 		res.status(401).send('your unauthorized\n');
+	}
+});
+
+// Create a new channel
+app.post('/api/createchannel', (req, res) => {
+
+	// Check if the user is authenticated
+	if (req.isAuthenticated()) {
+		// Insert the channel into the database
+		const query = "INSERT INTO channels (channel, name, channel_owner) VALUES ($1, $2, $3);";
+		const values = [
+			Crypto.randomBytes(16).toString('hex'),
+			req.body.name,
+			req.user.username,
+		];
+		console.log('New Channel:');
+		console.log(values);
+		database.query(query, values, (err, dbres) => {
+			res.status(201).send('Account created');
+		});
+	}
+
+	// Unauthenticated
+	else {
+		res.status(401).send();
+	}
+});
+
+// Request a list of the user's channels
+app.get('/api/getlist', (req, res) => {
+
+	// Check if the user is authenticated
+	if (req.isAuthenticated()) {
+
+		// Ask the database for our channels
+		const query = 'SELECT channel, name FROM channels WHERE channel_owner = $1;';
+		const values = [req.user.username];
+		database.query(query, values, (err, dbres) => {
+			res.send(dbres.rows);
+		});
+	}
+
+	// Unauthenticated
+	else {
+		res.status(401).send([]);
+	}
+});
+
+// Delete a channel
+app.delete('/api/deletechannel', (req, res) => {
+	// Check if the user is authenticated
+	if (req.isAuthenticated()) {
+
+		// Delete from the database
+		const query = 'DELETE FROM channels WHERE channel = $1 AND channel_owner = $2;';
+		const values = [req.body.channel, req.user.username];
+		database.query(query, values, (err, dbres) => {
+			res.status(204).send();
+		});
+	}
+
+	// Unauthenticated
+	else {
+		res.status(401).send([]);
 	}
 });
 

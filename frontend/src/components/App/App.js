@@ -15,6 +15,7 @@ import './App.css';
 import TopBar from '../TopBar/TopBar';
 import SignInPage from '../SignInPage/SignInPage';
 import SignUpPage from '../SignUpPage/SignUpPage';
+import ManagePage from '../ManagePage/ManagePage';
 import ControlPage from '../ControlPage/ControlPage';
 
 function App() {
@@ -32,7 +33,8 @@ function App() {
 						<SignUpPage />
 					</Route>
 					<Route path='/manage'>
-						<Redirect to='/control' />
+						{/* <Redirect to='/control' /> */}
+						<ManagePage />
 					</Route>
 					<Route path='/control'>
 						<ControlPage />
