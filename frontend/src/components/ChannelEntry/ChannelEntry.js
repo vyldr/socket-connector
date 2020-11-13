@@ -57,7 +57,7 @@ class ChannelEntry extends React.Component {
 					}}>
 						<button className='manageButton control'>
 							Control
-					</button>
+						</button>
 					</Link >
 
 					{/* Copy button */}

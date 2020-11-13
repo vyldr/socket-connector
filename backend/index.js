@@ -273,26 +273,48 @@ wss.on('connection', (ws) => {
 			// Make sure channel is a string
 			if (typeof (ws.channelName) != 'string') {
 				console.log('Channel request denied:', ws.channelName);
-				ws.close(1008, 'Invalid channel format');
+				ws.close(1003, 'Invalid channel format');
 				return;
 			}
 
-			// Add a new channel to the dictionary
-			if (channels[ws.channelName] == undefined) {
-				console.log('Channel is undefined');
-				channels[ws.channelName] = [];
-			} else {
-				console.log('Channel exists, connecting');
-			}
+			// Check if the channel is in the database
+			const query = 'SELECT EXISTS (SELECT TRUE FROM channels where channel=$1);';
+			const values = [ws.channelName];
+			database.query(query, values, (err, dbres) => {
 
-			// Subscribe to the channel
-			channels[ws.channelName].push(ws);
-			ws.channel = channels[ws.channelName];
-			console.log('Subscribed to channel:', ws.channelName);
+				// The channel exists
+				if (dbres.rows[0].exists) {
+					// Add a new channel to the dictionary
+					if (channels[ws.channelName] == undefined) {
+						console.log('Channel is unused');
+						channels[ws.channelName] = [];
+					}
 
+					// Channel is already in use
+					else {
+						console.log('Channel in use, connecting');
+					}
 
-			// Send the message to all other channel members
-		} else {
+					// Subscribe to the channel
+					channels[ws.channelName].push(ws);
+					ws.channel = channels[ws.channelName];
+					console.log('Subscribed to channel:', ws.channelName);
+
+				}
+
+				// Disconnect the client for making up a channel
+				else {
+					console.log('Fake channel:', ws.channelName);
+					ws.close(1008, 'Haha, you tried connecting to a fake channel');
+					return;
+				}
+
+			});
+
+		}
+
+		// Send the message to all other channel members
+		else {
 			for (var i = 0; i < ws.channel.length; i++) {
 				if (ws.channel[i] != ws) {
 					ws.channel[i].send(message);
@@ -303,6 +325,12 @@ wss.on('connection', (ws) => {
 
 	// Log disconnect
 	ws.on('close', () => {
+		console.log('WebSocket disconnect')
+
+		// Check if the channel was ever valid
+		if (!ws.channel) {
+			return;
+		}
 
 		// Remove the connection from the channel
 		for (var i = ws.channel.length; i >= 0; i--) {
@@ -310,7 +338,6 @@ wss.on('connection', (ws) => {
 				ws.channel.splice(i, 1);
 			}
 		}
-		console.log('WebSocket disconnect')
 
 		// Remove empty channel
 		if (ws.channel.length === 0) {

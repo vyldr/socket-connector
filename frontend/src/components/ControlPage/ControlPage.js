@@ -7,7 +7,7 @@ class ControlPage extends React.Component {
 		super(props);
 		this.state = {
 			message: '',
-			channel: 'example-channel-1234',
+			channel: props.location.state,
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -26,29 +26,34 @@ class ControlPage extends React.Component {
 
 		// The connection is open
 		this.ws.onopen = () => {
-			console.log('connected');
+			console.log('Connecting to', this.state.channel);
 
 			// Authenticate
-			this.send(this.state.channel);
+			this.ws.send(this.state.channel);
 		};
 
 		// Received a message from the sercer
 		this.ws.onmessage = (event) => {
 			var message = event.data;
-			console.log('From Server:', message);
+			console.log('Received:', message);
 		};
+
+		// The connection was closed
+		this.ws.onclose = (event) => {
+			console.log('Connection closed:', event.code, event.reason);
+		}
 	}
 
 	// Clean up the WebSocket
 	componentWillUnmount() {
-		console.log('disconnected');
+		console.log('Disconnecting...');
 		this.ws.close();
 	}
 
 	// Send a message to the server
 	send(message) {
 		this.ws.send(message);
-		console.log('To Server:  ', message);
+		console.log('Sent:    ', message);
 	}
 
 	// Send the contents of the message box

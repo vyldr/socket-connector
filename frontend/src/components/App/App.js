@@ -26,19 +26,10 @@ function App() {
 
 				{/* The main component of the page gets swapped here */}
 				<Switch>
-					<Route path='/signin'>
-						<SignInPage />
-					</Route>
-					<Route path='/signup'>
-						<SignUpPage />
-					</Route>
-					<Route path='/manage'>
-						{/* <Redirect to='/control' /> */}
-						<ManagePage />
-					</Route>
-					<Route path='/control'>
-						<ControlPage />
-					</Route>
+					<Route path='/signin' component={SignInPage} />
+					<Route path='/signup' component={SignUpPage} />
+					<Route path='/manage' component={ManagePage} />
+					<Route path='/control' component={ControlPage} />
 					<Route path='/'>
 						<Redirect to='/signin' />
 					</Route>
