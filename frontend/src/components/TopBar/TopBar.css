@@ -1,27 +1,20 @@
 .TopBar {
 	/* background-color: #0099dd; */
 	background-color: #348d00;
-	height: 3.5rem;
 	display: flex;
-	flex-direction: row;
 	align-items: center;
-	/* padding: 0.5rem; */
-	justify-content: space-between;
+	flex-wrap: wrap;
 	position: fixed;
-	top: 0;
 	width: 100%;
 }
 
 /* An empty space to bring balance to the flexbox */
-.space {
-	height: 3rem;
-	flex: 0 80 10rem;
+.TopBar .space {
+	flex: 1;
 }
 
-.title {
+.TopBar .title {
 	width: 11rem;
-	flex: 0 2 auto;
-	text-align: center;
 	padding: 0.5rem;
 	font-weight: bold;
 	font-size: large;
@@ -30,30 +23,39 @@
 	border-radius: 0.3rem;
 	border: none;
 	height: 2.1rem;
+	outline: none;
+	margin: 0.25rem;
+	transition-duration: 0.15s;
 }
 
-.buttonContainer {
-	flex: 0 1 auto;
+.TopBar .title:hover {
+	background-color: #000000aa;
+}
+
+.TopBar .buttonContainer {
+	flex: 1;
 	display: flex;
-	margin-left: 0.5rem;
+	justify-content: flex-end;
+	margin-bottom: 0.5rem;
+	margin-top: 0.5rem;
 }
 
-.TopBarButton {
-	margin-right: 0.5rem;
+.TopBar .TopBarButton {
+	margin-right: 0.25rem;
 	height: 2.1rem;
 	width: 4rem;
 	color: #fff;
-	background-color: #00000020;
+	background-color: #00000033;
 	border: 1px solid #fff;
 	border-radius: 0.3rem;
 	transition-duration: 0.15s;
-	outline: 0;
+	outline: none;
 }
 
-.TopBarButton:hover {
-	background-color: #00000044;
+.TopBar .TopBarButton:hover {
+	background-color: #00000055;
 }
 
-.TopBarButton:active {
+.TopBar .TopBarButton:active {
 	background-color: #00000088;
 }

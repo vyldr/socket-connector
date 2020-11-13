@@ -77,7 +77,7 @@ class SignInPage extends React.Component {
 						name='username'
 						value={this.state.username}
 						onChange={this.handleChangeUsername}>
-					</input><br />
+					</input>
 
 					{/* Password */}
 					<input placeholder='Password'
@@ -86,7 +86,7 @@ class SignInPage extends React.Component {
 						id='password'
 						value={this.state.password}
 						onChange={this.handleChangePassword}>
-					</input><br />
+					</input>
 
 					{/* Submit button */}
 					<button className='formButton'

@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import '../../style.css';
 
-// import './ManagePage.css';
+import './ManagePage.css';
 
 import ChannelEntry from '../ChannelEntry/ChannelEntry';
 
@@ -85,7 +85,7 @@ class ManagePage extends React.Component {
 
 	render() {
 		return (
-			<div className='page'>
+			<div className='page ManagePage'>
 				<div className='centerForm'>
 
 					{/* Title */}
@@ -106,8 +106,14 @@ class ManagePage extends React.Component {
 
 					{/* Create new channel */}
 					<hr />
-					<form onSubmit={this.newChannel}>
+					<div className='formTitle'>
+						<code>Add new channel</code>
+					</div>
+					<form id='newChannelForm'
+						onSubmit={this.newChannel}>
+
 						<input name='newChannelName'
+							id='newChannelName'
 							required
 							placeholder='New channel name'
 							autoComplete='off'
@@ -115,14 +121,14 @@ class ManagePage extends React.Component {
 							onChange={this.handleChange} />
 
 						<button className='formButton'
+							id='newChannelButton'
 							type='submit'>
 							New channel
 						</button>
 					</form>
 				</div>
 			</div >
-
-		)
+		);
 	}
 }
 

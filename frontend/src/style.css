@@ -1,25 +1,25 @@
 /* Keep page content centered */
 .page {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: calc(100% - 4rem);
-    padding-top: 4rem;
+	padding-top: 4rem;
+	padding-bottom: 1rem;
+	margin-top: auto;
+	margin-bottom: auto;
 }
 
 /* Most pages will have one of these in the center */
 .centerForm {
-	margin: auto;
+	display: flex;
+	flex-flow: row wrap;
 	border: 1px solid #000;
 	border-radius: 0.3rem;
 	padding: 1rem;
 	color: #fff;
 	background-color: #383838;
-	max-width: 20rem;
+	max-width: 15rem;
 }
 
 .formTitle {
-	margin: auto;
+	flex-grow: 1;
 	text-align: center;
 	font-weight: bold;
 	background-color: #00000088;
@@ -37,6 +37,8 @@ input {
 	outline: none;
 	transition-duration: 0.15s;
 	caret-color: #57eb02;
+	width: 100%;
+	flex-shrink: 1;
 }
 
 input:hover {
@@ -68,6 +70,10 @@ input:focus {
 	background-color: #57eb0266;
 }
 
+.List {
+	width: 100%;
+}
+
 .hidden {
 	display: none;
 }
@@ -78,4 +84,21 @@ input:focus {
 	margin-top: 1rem;
 	padding: 0.5rem;
 	border-radius: 0.3rem;
+}
+
+hr {
+	background-color: #57eb02;
+	border: 1px solid #57eb02;
+	margin: 1rem;
+	width: 100%;
+}
+
+@media only screen and (max-width: 500px) {
+	body {
+		background-color: #383838;
+	}
+
+	.centerForm {
+		border: none;
+	}
 }

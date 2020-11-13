@@ -1,0 +1,60 @@
+.ChannelEntry {
+    border: 1px solid #000;
+    border-radius: 0.3rem;
+    padding: 0.6rem;
+    margin-top: 1rem;
+    background-color: #00000033;
+    box-sizing: border-box;
+}
+
+.ChannelEntry .channelName {
+    overflow-wrap: break-word;
+}
+
+.ChannelEntry .channelButtons {
+    display: flex;
+    justify-content: space-around;
+    flex-flow: row wrap;
+    column-gap: 0.5rem;
+}
+
+.ChannelEntry .manageButton {
+    width: 5.5rem;
+    border: 1px solid;
+    background-color: #00000022;
+    color: #fff;
+    border-radius: 0.3rem;
+    margin-top: 0.6rem;
+    padding: 0.4rem;
+    transition-duration: 0.15s;
+	outline: none;
+}
+
+.ChannelEntry .manageButton:hover {
+	background-color: #00000066;
+}
+
+.ChannelEntry .control {
+    border-color: #57eb02;
+}
+
+.ChannelEntry .control:active {
+	background-color: #57eb0266;
+}
+
+.ChannelEntry .copy {
+    border-color: #57eb02;
+}
+
+.ChannelEntry .copy:active {
+	background-color: #57eb0266;
+}
+
+.ChannelEntry .delete {
+    border-color: #f00;
+}
+
+.ChannelEntry .delete:active {
+	background-color: #f006;
+}
+

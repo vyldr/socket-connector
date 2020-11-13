@@ -42,34 +42,36 @@ class ChannelEntry extends React.Component {
 		}
 
 		return (
-			<div>
+			<div className='ChannelEntry'>
 				{/* Channel name */}
 				< div className='channelName' >
 					{this.state.channelName}
 				</div >
 
-				{/* Control button */}
-				< Link to={{
-					pathname: '/control',
-					state: this.state.channel,
-				}}>
-					<button className='manageButton control'>
-						Control
+				<div className='channelButtons'>
+
+					{/* Control button */}
+					< Link to={{
+						pathname: '/control',
+						state: this.state.channel,
+					}}>
+						<button className='manageButton control'>
+							Control
 					</button>
-				</Link >
+					</Link >
 
-				{/* Copy button */}
-				< button onClick={this.copyKey}
-					className='manageButton copy' >
-					Copy key
-			</button >
+					{/* Copy button */}
+					< button onClick={this.copyKey}
+						className='manageButton copy' >
+						Copy key
+					</button >
 
-				{/* Delete button */}
-				< button className='manageButton delete'
-					onClick={this.deleteChannel}>
-					Delete channel
-				</button >
-				<hr />
+					{/* Delete button */}
+					< button className='manageButton delete'
+						onClick={this.deleteChannel}>
+						Delete
+					</button >
+				</div>
 			</div >
 		);
 	}

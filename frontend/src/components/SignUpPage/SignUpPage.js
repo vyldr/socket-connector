@@ -88,7 +88,7 @@ class SignUpPage extends React.Component {
 						id='username'
 						value={this.state.username}
 						onChange={this.handleChange}>
-					</input><br />
+					</input>
 
 					{/* Password */}
 					<input placeholder='New password'
@@ -99,7 +99,7 @@ class SignUpPage extends React.Component {
 						id='password'
 						value={this.state.password}
 						onChange={this.handleChange}>
-					</input><br />
+					</input>
 
 					{/* Password again */}
 					<input placeholder='New password again'
@@ -110,7 +110,7 @@ class SignUpPage extends React.Component {
 						id='confirm'
 						value={this.state.passwordAgain}
 						onChange={this.handleChange}>
-					</input><br />
+					</input>
 
 					{/* Submit button */}
 					<button className='formButton'

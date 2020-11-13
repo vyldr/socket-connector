@@ -74,7 +74,7 @@ class ControlPage extends React.Component {
 					<input placeholder='Message'
 						value={this.state.message}
 						onChange={this.handleChange}>
-					</input><br />
+					</input>
 
 					{/* Send button */}
 					<button className='formButton'
