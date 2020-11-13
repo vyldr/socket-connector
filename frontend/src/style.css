@@ -20,6 +20,7 @@
 
 .formTitle {
 	flex-grow: 1;
+	width: 100%;
 	text-align: center;
 	font-weight: bold;
 	background-color: #00000088;
@@ -79,6 +80,8 @@ input:focus {
 }
 
 .errorMessage {
+	flex: 1;
+	width: 100%;
 	background-color: #cc1f2d;
 	text-align: center;
 	margin-top: 1rem;

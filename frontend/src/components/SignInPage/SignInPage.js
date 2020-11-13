@@ -10,19 +10,17 @@ class SignInPage extends React.Component {
 		this.state = {
 			username: '',
 			password: '',
+			message: '',
 		};
 
-		this.handleChangeUsername = this.handleChangeUsername.bind(this);
-		this.handleChangePassword = this.handleChangePassword.bind(this);
+		// Input handlers
+		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	// Username and password fields
-	handleChangeUsername(event) {
-		this.setState({ username: event.target.value });
-	}
-	handleChangePassword(event) {
-		this.setState({ password: event.target.value });
+	// Input fields
+	handleChange(event) {
+		this.setState({ [event.target.name]: event.target.value });
 	}
 
 	// Submit the username and password to sign in
@@ -43,23 +41,25 @@ class SignInPage extends React.Component {
 			},
 			body: data,
 		})
-			.then((res) => {
+			.then(res => res.json().then(data => ({
+				status: res.status,
+				message: data,
+			})))
+			.then(obj => {
 
 				// Redirect to the manage page
-				if (res.status === 200) {
+				if (obj.status === 200) {
 					this.props.history.push('/manage');
 				}
 
 				// Highlight the password
 				else {
-					this.thatsIncorrect();
+					this.setState({ message: obj.message });
+
+					// Highlight the password field
+					document.getElementById('password').select();
 				}
 			});
-	}
-
-	thatsIncorrect() {
-		// Highlight the password field
-		document.getElementById('password').select();
 	}
 
 	render() {
@@ -72,11 +72,16 @@ class SignInPage extends React.Component {
 						<code>Sign In</code>
 					</div>
 
+					{/* Error message */}
+					<div className={this.state.message === '' ? 'hidden' : 'errorMessage'}>
+						{this.state.message}
+					</div>
+
 					{/* Username */}
 					<input placeholder='Username'
 						name='username'
 						value={this.state.username}
-						onChange={this.handleChangeUsername}>
+						onChange={this.handleChange}>
 					</input>
 
 					{/* Password */}
@@ -85,7 +90,7 @@ class SignInPage extends React.Component {
 						type='password'
 						id='password'
 						value={this.state.password}
-						onChange={this.handleChangePassword}>
+						onChange={this.handleChange}>
 					</input>
 
 					{/* Submit button */}

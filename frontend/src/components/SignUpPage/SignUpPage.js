@@ -49,19 +49,24 @@ class SignUpPage extends React.Component {
 			},
 			body: data,
 		})
-			.then((res) => {
+			.then(res => res.json().then(data => ({
+				status: res.status,
+				message: data,
+			})))
+			.then(obj => {
 
 				// Redirect to the sign in page
-				if (res.status === 201) {
+				if (obj.status === 201) {
 					this.props.history.push('/signin');
 				}
 
 				// Error probably means username is unavailable
 				else {
-					this.setState({ message: 'Username unavailable' });
+					this.setState({ message: obj.message });
+
+					// Highlight the username field
 					document.getElementById('username').select();
 				}
-
 			});
 	}
 

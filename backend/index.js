@@ -43,7 +43,7 @@ passport.use(new LocalStrategy(
 
 				// Username is incorrect
 				if (dbres.rows.length === 0) {
-					return done(null, false, { message: 'Username or password is incorrect\n' });
+					return done(null, false, { message: '"Username or password is incorrect"' });
 				}
 
 				// Everything looks good
@@ -53,7 +53,7 @@ passport.use(new LocalStrategy(
 
 					// Password is incorrect
 				} else {
-					return done(null, false, { message: 'Username or password is incorrect\n' });
+					return done(null, false, { message: '"Username or password is incorrect"' });
 				}
 			}
 		});
@@ -104,7 +104,7 @@ app.post('/api/signup', (req, res, next) => {
 
 		// Username taken
 		if (dbres.rows[0].exists) {
-			res.status(409).send('Username taken');
+			res.status(409).send('"Username taken"');
 		}
 
 		// Username available
@@ -118,7 +118,7 @@ app.post('/api/signup', (req, res, next) => {
 					var query = "INSERT INTO users (username, password) VALUES ($1, $2);";
 					var values = [req.body.username, hash];
 					database.query(query, values, (err, dbres) => {
-						res.status(201).send('Account created');
+						res.status(201).send('"Account created"');
 					});
 				});
 			});
@@ -131,16 +131,16 @@ app.post('/api/signup', (req, res, next) => {
 app.post('/api/signin', (req, res, next) => {
 	passport.authenticate('local', (err, user, info) => {
 		if (info) {
-			return res.status(400).send(info.message);
+			return res.status(401).send(info.message);
 		}
 		if (err) {
 			return next(err);
 		}
 		req.login(user, (err) => {
 			if (user) {
-				return res.status(200).send('You were authenticated & logged in!\n');
+				return res.status(200).send('"You have signed in"');
 			} else {
-				return res.status(401).send('Incorrect username or password\n');
+				return res.status(401).send('"Incorrect username or password"');
 			}
 		})
 	})(req, res, next);
@@ -149,7 +149,7 @@ app.post('/api/signin', (req, res, next) => {
 // Sign out the user
 app.post('/api/signout', (req, res) => {
 	req.logOut();
-	res.send('Signed out\n');
+	res.send('"Signed out"');
 });
 
 // Determine if the user is authenticated
@@ -158,10 +158,11 @@ app.get('/api/signedin', (req, res) => {
 	// Yes
 	if (req.isAuthenticated()) {
 		res.status(200).send(req.user.username);
+	}
 
-		// No
-	} else {
-		res.status(401).send('your unauthorized\n');
+	// No
+	else {
+		res.status(401).send('"your unauthorized"');
 	}
 });
 
@@ -180,7 +181,7 @@ app.post('/api/createchannel', (req, res) => {
 		console.log('New Channel:');
 		console.log(values);
 		database.query(query, values, (err, dbres) => {
-			res.status(201).send('Account created');
+			res.status(201).send('"Channel created"');
 		});
 	}
 
