@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import '../../style.css';
 
 import './ChannelEntry.css';
@@ -11,12 +11,19 @@ class ChannelEntry extends React.Component {
 			channel: props.channel,
 			channelName: props.channelName,
 			deleted: false,
+			redirect: false,
 		};
 
 		// Bind functions
+		this.control = this.control.bind(this);
 		this.copyKey = this.copyKey.bind(this);
 		this.deleteChannel = this.deleteChannel.bind(this);
 
+	}
+
+	// Go to the control page for this channel
+	control() {
+		this.setState({ redirect: '/control' });
 	}
 
 	// Copy the channel key to the clipboard
@@ -37,8 +44,23 @@ class ChannelEntry extends React.Component {
 	}
 
 	render() {
+
+		// Entry deleted
 		if (this.state.deleted) {
 			return null
+		}
+
+		// Go to the control page
+		if (this.state.redirect) {
+			return (
+				<Redirect to={{
+					pathname: this.state.redirect,
+					state: {
+						channel: this.state.channel,
+						channelName: this.state.channelName,
+					}
+				}} />
+			)
 		}
 
 		return (
@@ -51,26 +73,22 @@ class ChannelEntry extends React.Component {
 				<div className='channelButtons'>
 
 					{/* Control button */}
-					< Link to={{
-						pathname: '/control',
-						state: this.state.channel,
-					}}>
-						<button className='manageButton control'>
-							Control
-						</button>
-					</Link >
+					<button onClick={this.control}
+						className='manageButton control'>
+						Control
+					</button>
 
 					{/* Copy button */}
 					< button onClick={this.copyKey}
 						className='manageButton copy' >
 						Copy key
-					</button >
+					</button>
 
 					{/* Delete button */}
 					< button className='manageButton delete'
 						onClick={this.deleteChannel}>
 						Delete
-					</button >
+					</button>
 				</div>
 			</div >
 		);

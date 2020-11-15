@@ -1,0 +1,35 @@
+.ControlPage .buttonContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+	gap: 0.5rem;
+	margin-top: 1rem;
+	width: 100%;
+}
+
+.ControlPage .buttonContainer button {
+    width: 4.5rem;
+    border: 1px solid #2181ff;
+    background-color: #00000022;
+    color: #fff;
+    border-radius: 0.3rem;
+    /* margin-top: 0.6rem; */
+    padding: 0.4rem;
+    transition-duration: 0.15s;
+	outline: none;
+	box-sizing: border-box;
+	flex-grow: 1;
+	max-width: 8rem;
+}
+
+.ControlPage .buttonContainer button:hover {
+	background-color: #00000066;
+}
+
+.ControlPage .buttonContainer .enabled {
+	background-color: #2181ff;
+}
+
+.ControlPage .buttonContainer .enabled:hover {
+	background-color: #2181ff;
+}

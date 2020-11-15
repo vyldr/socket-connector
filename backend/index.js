@@ -348,7 +348,7 @@ wss.on('connection', (ws) => {
 	});
 
 	// Log connection
-	ws.send('Connected');
+	ws.send('"Connected"');
 	console.log('WebSocket connect');
 });
 

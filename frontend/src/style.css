@@ -40,6 +40,7 @@ input {
 	caret-color: #57eb02;
 	width: 100%;
 	flex-shrink: 1;
+	box-sizing: border-box;
 }
 
 input:hover {
