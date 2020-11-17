@@ -20,6 +20,15 @@ class ControlPage extends React.Component {
 		this.handleInput = this.handleInput.bind(this);
 		this.lockChange = this.lockChange.bind(this);
 		this.sendMessageBox = this.sendMessageBox.bind(this);
+		this.gpConnect = this.gpConnect.bind(this);
+		this.gpDisconnect = this.gpDisconnect.bind(this);
+		this.gpPoll = this.gpPoll.bind(this);
+
+		// Set up the gamepad model
+		this.gamepads = {
+			count: 0,
+			interval: null,
+		};
 	}
 
 	componentDidMount() {
@@ -71,6 +80,12 @@ class ControlPage extends React.Component {
 
 		// Mouse scroll
 		document.addEventListener('wheel', this.handleInput);
+
+		// Gamepad connect
+		window.addEventListener('gamepadconnected', this.gpConnect);
+
+		// Gamepad disconnect
+		window.addEventListener('gamepaddisconnected', this.gpDisconnect);
 	}
 
 	// Prepare input events to send
@@ -121,7 +136,7 @@ class ControlPage extends React.Component {
 
 	// Capture the pointer
 	mouseStart() {
-		document.requestPointerLock();
+		document.getElementById('mouseButton').requestPointerLock();
 	}
 
 	// Check if the pointer is captured
@@ -141,6 +156,91 @@ class ControlPage extends React.Component {
 		}
 	}
 
+	// A new gamepad was connected
+	gpConnect(event) {
+		// Add the new gamepad to the tracker
+		this.gamepads[event.gamepad.index] = {
+			axes: new Array(event.gamepad.axes.length).fill(0),
+			buttons: new Array(event.gamepad.buttons.length).fill(0),
+		}
+
+		// Start polling
+		if (this.gamepads.count++ === 0) {
+			this.gamepads.interval = setInterval(this.gpPoll, (1000 / 60));
+		}
+	}
+
+	// A gamepad was removed
+	gpDisconnect(event) {
+
+		// Remove the gamepad from the tracker
+		delete this.gamepads[event.gamepad.index];
+
+		// Stop polling
+		if (--this.gamepads.count === 0) {
+			clearInterval(this.gamepads.interval);
+		}
+	}
+
+	// Check the current status of the gamepads
+	gpPoll() {
+
+		// Cancel if gamepads are disabled
+		if (!this.state.controllerEnable) {
+			return;
+		}
+
+		// Update gamepad state
+		var gamepads = navigator.getGamepads();
+
+		// Check each connected gamepad
+		for (var i = 0; i < gamepads.length; i++) {
+			if (gamepads[i]) {
+
+				// Current and previous values
+				var value, previous;
+
+				// Check for new axis values
+				for (var axis = 0; axis < gamepads[i].axes.length; axis++) {
+					value = gamepads[i].axes[axis];
+					previous = this.gamepads[i].axes[axis];
+					if (value !== previous) {
+
+						// Update the value
+						this.gamepads[i].axes[axis] = value;
+
+						// Send the change
+						this.send({
+							type: 'axis',
+							controller: i,
+							axis: axis,
+							value: value,
+						});
+					}
+				}
+
+				// Check for new button values
+				for (var button = 0; button < gamepads[i].buttons.length; button++) {
+					value = gamepads[i].buttons[button].value;
+					previous = this.gamepads[i].buttons[button];
+					if (value !== previous) {
+
+						// Update the value
+						this.gamepads[i].buttons[button] = value;
+
+						// Send the change
+						this.send({
+							type: 'button',
+							controller: i,
+							button: button,
+							value: value,
+						});
+					}
+				}
+			}
+		}
+	}
+
 	componentWillUnmount() {
 
 		// Close the WebSocket connection
@@ -155,6 +255,8 @@ class ControlPage extends React.Component {
 		document.removeEventListener('mousedown', this.handleInput);
 		document.removeEventListener('mouseup', this.handleInput);
 		document.removeEventListener('wheel', this.handleInput);
+		window.removeEventListener('gamepadconnected', this.gpConnect);
+		window.removeEventListener('gamepaddisconnected', this.gpConnect);
 	}
 
 	// Send a message to the server
@@ -232,7 +334,8 @@ class ControlPage extends React.Component {
 						</button>
 
 						{/* Controller button */}
-						<button>
+						<button className={this.state.controllerEnable ? 'enabled' : ''}
+							onClick={() => this.setState({ controllerEnable: !this.state.controllerEnable })}>
 							Controller
 						</button>
 					</div>
