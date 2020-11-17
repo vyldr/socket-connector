@@ -9,9 +9,10 @@ class ControlPage extends React.Component {
 		this.state = {
 			redirect: false,
 			message: '',
+			messageFocused: false,
 			channel: props.location.state ? props.location.state.channel : '',
 			channelName: props.location.state ? props.location.state.channelName : '',
-			keyboardEnable: false,
+			keyboardEnable: true,
 			mouseEnable: false,
 			controllerEnable: false,
 		};
@@ -95,7 +96,8 @@ class ControlPage extends React.Component {
 		if ((event.type === 'keydown' ||
 			event.type === 'keyup') &&
 			!event.repeat &&
-			this.state.keyboardEnable) {
+			this.state.keyboardEnable &&
+			!this.state.messageFocused) {
 
 			this.send({
 				type: event.type,
@@ -274,6 +276,7 @@ class ControlPage extends React.Component {
 			type: 'message',
 			input: this.state.message,
 		});
+
 		this.setState({ message: '' });
 	}
 
@@ -301,7 +304,9 @@ class ControlPage extends React.Component {
 						{/* Message box */}
 						<input placeholder={'Message to ' + this.state.channelName}
 							value={this.state.message}
-							onChange={this.handleChange}>
+							onChange={this.handleChange}
+							onFocus={() => this.setState({ messageFocused: true })}
+							onBlur={() => this.setState({ messageFocused: false })}>
 						</input>
 
 						{/* Send button */}
@@ -321,7 +326,7 @@ class ControlPage extends React.Component {
 					<div className='buttonContainer'>
 
 						{/* Keyboard button */}
-						<button className={this.state.keyboardEnable ? 'enabled' : ''}
+						<button className={this.state.keyboardEnable && !this.state.messageFocused ? 'enabled' : ''}
 							onClick={() => this.setState({ keyboardEnable: !this.state.keyboardEnable })}>
 							Keyboard
 						</button>
