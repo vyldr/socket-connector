@@ -1,25 +1,28 @@
+.ControlPage .centerForm {
+	max-width: 26rem;
+}
+
 .ControlPage .buttonContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
 	gap: 0.5rem;
 	margin-top: 1rem;
 	width: 100%;
 }
 
 .ControlPage .buttonContainer button {
-    width: 4.5rem;
-    border: 1px solid #2181ff;
-    background-color: #00000022;
-    color: #fff;
-    border-radius: 0.3rem;
-    /* margin-top: 0.6rem; */
-    padding: 0.4rem;
-    transition-duration: 0.15s;
+	width: 4.5rem;
+	border: 1px solid #2181ff;
+	background-color: #00000022;
+	color: #fff;
+	border-radius: 0.3rem;
+	padding: 0.4rem;
+	transition-duration: 0.15s;
 	outline: none;
 	box-sizing: border-box;
 	flex-grow: 1;
-	max-width: 8rem;
+	max-width: 8.5rem;
 }
 
 .ControlPage .buttonContainer button:hover {
@@ -32,4 +35,49 @@
 
 .ControlPage .buttonContainer .enabled:hover {
 	background-color: #2181ff;
+}
+
+.ControlPage .messageHistory {
+	background: #0008;
+	border: 1px solid #57eb02;
+	border-radius: 0.3rem;
+	padding: 0.6rem;
+	margin-top: 1rem;
+	margin-bottom: 0;
+	box-sizing: border-box;
+	flex-grow: 1;
+	overflow-y: scroll;
+	height: 13.5rem;
+	display: flex;
+	flex-direction: column-reverse;
+}
+
+.ControlPage .messageHistory .code {
+	white-space: pre-wrap;
+	background: #0000;
+	padding: 0.1rem;
+	overflow-x: unset;
+}
+
+.ControlPage .messageHistory .code span {
+	display: inline-block;
+	height: fit-content;
+	padding: 0.1rem;
+}
+
+.ControlPage form {
+	display: flex;
+	flex-wrap: wrap;
+	column-gap: 0.5rem;
+	width: 100%;
+}
+
+.ControlPage #messageBox {
+	width: 7rem;
+	flex-grow: 1000;
+}
+
+.ControlPage #messageButton {
+	width: 7rem;
+	flex-grow: 1;
 }

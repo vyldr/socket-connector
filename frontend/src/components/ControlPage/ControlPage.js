@@ -21,6 +21,7 @@ class ControlPage extends React.Component {
 		this.handleInput = this.handleInput.bind(this);
 		this.lockChange = this.lockChange.bind(this);
 		this.sendMessageBox = this.sendMessageBox.bind(this);
+		this.addMessage = this.addMessage.bind(this);
 		this.gpConnect = this.gpConnect.bind(this);
 		this.gpDisconnect = this.gpDisconnect.bind(this);
 		this.gpPoll = this.gpPoll.bind(this);
@@ -53,6 +54,7 @@ class ControlPage extends React.Component {
 		this.ws.onmessage = (event) => {
 			var message = event.data;
 			console.log('Received:', JSON.parse(message));
+			this.addMessage(message);
 		};
 
 		// The connection was closed
@@ -214,7 +216,7 @@ class ControlPage extends React.Component {
 						// Send the change
 						this.send({
 							type: 'axis',
-							controller: i,
+							id: i,
 							axis: axis,
 							value: value,
 						});
@@ -233,7 +235,7 @@ class ControlPage extends React.Component {
 						// Send the change
 						this.send({
 							type: 'button',
-							controller: i,
+							id: i,
 							button: button,
 							value: value,
 						});
@@ -263,8 +265,10 @@ class ControlPage extends React.Component {
 
 	// Send a message to the server
 	send(message) {
-		this.ws.send(JSON.stringify(message));
-		console.log('Sent:    ', message);
+		console.log('Sent:', message);
+		message = JSON.stringify(message);
+		this.ws.send(message);
+		this.addMessage(message);
 	}
 
 	// Send the contents of the message box
@@ -278,6 +282,26 @@ class ControlPage extends React.Component {
 		});
 
 		this.setState({ message: '' });
+	}
+
+	// Add a message to the message log
+	addMessage(message) {
+
+		// Build the code line
+		var code = document.createElement('div');
+		code.innerText = message;
+		code.classList.add('json');
+		code.classList.add('code');
+		window.hljs.highlightBlock(code);
+
+		// Add the new line
+		var messageHistory = document.getElementById('messageHistory');
+		messageHistory.insertBefore(code, messageHistory.firstChild);
+
+		// Remove old lines
+		if (messageHistory.childNodes.length > 100) {
+			messageHistory.removeChild(messageHistory.lastChild);
+		}
 	}
 
 	// Update the message box text
@@ -296,13 +320,19 @@ class ControlPage extends React.Component {
 
 					{/* Title */}
 					<div className='formTitle'>
-						<code>Send a message</code>
+						<code>Send a command</code>
 					</div>
+
+					<pre className='messageHistory json'
+						id='messageHistory'>
+					</pre>
 
 					<form onSubmit={this.sendMessageBox}>
 
 						{/* Message box */}
 						<input placeholder={'Message to ' + this.state.channelName}
+							id='messageBox'
+							autoComplete='off'
 							value={this.state.message}
 							onChange={this.handleChange}
 							onFocus={() => this.setState({ messageFocused: true })}
@@ -311,6 +341,7 @@ class ControlPage extends React.Component {
 
 						{/* Send button */}
 						<button className='formButton'
+							id='messageButton'
 							type='submit'>
 							Send
 						</button>
