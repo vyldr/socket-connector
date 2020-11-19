@@ -60,7 +60,11 @@ class ControlPage extends React.Component {
 		// The connection was closed
 		this.ws.onclose = (event) => {
 			console.log('Connection closed:', event.code, event.reason);
-			this.setState({ redirect: '/manage' });
+
+			// Redirect if closed externally
+			if (event.code === 1006) {
+				this.setState({ redirect: '/manage' });
+			}
 		}
 
 		// Handle keydowns
