@@ -79,6 +79,8 @@ class SignInPage extends React.Component {
 
 					{/* Username */}
 					<input placeholder='Username'
+						required
+						autoComplete='username'
 						name='username'
 						value={this.state.username}
 						onChange={this.handleChange}>
@@ -86,6 +88,8 @@ class SignInPage extends React.Component {
 
 					{/* Password */}
 					<input placeholder='Password'
+						required
+						autoComplete='current-password'
 						name='password'
 						type='password'
 						id='password'

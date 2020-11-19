@@ -73,7 +73,7 @@ class TopBar extends React.Component {
 						</Route>
 						<Route path='/control'>
 							<Link to='/manage'>
-								<button className='TopBarButton'>Manage</button>
+								<button className='TopBarButton' title='Return to the manage page'>Manage</button>
 							</Link>
 							<button className='TopBarButton' onClick={this.signOut}>Sign out</button>
 						</Route>
@@ -87,12 +87,6 @@ class TopBar extends React.Component {
 							</Link>
 						</Route>
 					</Switch>
-					{/* <Link to='/control'> */}
-					{/* <button className='TopBarButton'>Control</button> */}
-					{/* </Link> */}
-					{/* <Link to='/signin'> */}
-					{/* <button className='TopBarButton' onClick={this.checkSignIn}>Sign In</button> */}
-					{/* </Link> */}
 				</div>
 			</div>
 		);

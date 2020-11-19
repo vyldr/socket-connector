@@ -320,7 +320,7 @@ class ControlPage extends React.Component {
 
 					{/* Title */}
 					<div className='formTitle'>
-						<code>Send a command</code>
+						<code>Connected to {this.state.channelName}</code>
 					</div>
 
 					<pre className='messageHistory json'
@@ -342,7 +342,8 @@ class ControlPage extends React.Component {
 						{/* Send button */}
 						<button className='formButton'
 							id='messageButton'
-							type='submit'>
+							type='submit'
+							title={'Send a message to all active members of channel: ' + this.state.channelName}>
 							Send
 						</button>
 					</form>
@@ -358,20 +359,23 @@ class ControlPage extends React.Component {
 
 						{/* Keyboard button */}
 						<button className={this.state.keyboardEnable && !this.state.messageFocused ? 'enabled' : ''}
-							onClick={() => this.setState({ keyboardEnable: !this.state.keyboardEnable })}>
+							onClick={() => this.setState({ keyboardEnable: !this.state.keyboardEnable })}
+							title='Toggle keyboard input'>
 							Keyboard
 						</button>
 
 						{/* Mouse button */}
 						<button className={this.state.mouseEnable ? 'enabled' : ''}
 							onClick={this.mouseStart}
+							title='Toggle mouse input (locks the pointer)'
 							id='mouseButton'>
 							Mouse
 						</button>
 
 						{/* Controller button */}
 						<button className={this.state.controllerEnable ? 'enabled' : ''}
-							onClick={() => this.setState({ controllerEnable: !this.state.controllerEnable })}>
+							onClick={() => this.setState({ controllerEnable: !this.state.controllerEnable })}
+							title='Toggle game controller input'>
 							Controller
 						</button>
 					</div>

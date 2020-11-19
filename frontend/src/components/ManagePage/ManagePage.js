@@ -81,6 +81,9 @@ class ManagePage extends React.Component {
 				}
 
 			});
+
+		// Clear the name field
+		this.setState({ newChannelName: '' });
 	}
 
 	render() {
@@ -121,6 +124,7 @@ class ManagePage extends React.Component {
 							onChange={this.handleChange} />
 
 						<button className='formButton'
+							title='Add a new channel to the list'
 							id='newChannelButton'
 							type='submit'>
 							New channel

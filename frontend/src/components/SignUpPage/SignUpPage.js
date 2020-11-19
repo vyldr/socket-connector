@@ -119,6 +119,7 @@ class SignUpPage extends React.Component {
 
 					{/* Submit button */}
 					<button className='formButton'
+						title='Create a new account'
 						type='submit'>
 						Create
 					</button>

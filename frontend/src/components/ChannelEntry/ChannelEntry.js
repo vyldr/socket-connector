@@ -33,14 +33,16 @@ class ChannelEntry extends React.Component {
 
 	// Delete a channel from the server
 	deleteChannel() {
-		const data = JSON.stringify({ channel: this.state.channel });
-		fetch(document.location.origin + '/api/deletechannel', {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: data,
-		}).then(() => this.setState({ deleted: true }));
+		if (window.confirm('Are you sure you want to delete this channel?')) {
+			const data = JSON.stringify({ channel: this.state.channel });
+			fetch(document.location.origin + '/api/deletechannel', {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: data,
+			}).then(() => this.setState({ deleted: true }));
+		}
 	}
 
 	render() {
@@ -74,18 +76,21 @@ class ChannelEntry extends React.Component {
 
 					{/* Control button */}
 					<button onClick={this.control}
+						title='Connect to this channel to send and receive commands'
 						className='manageButton control'>
 						Control
 					</button>
 
 					{/* Copy button */}
 					< button onClick={this.copyKey}
+						title='Copy the channel key to the clipboard'
 						className='manageButton copy' >
 						Copy key
 					</button>
 
 					{/* Delete button */}
 					< button className='manageButton delete'
+						title='Permanently delete this channel'
 						onClick={this.deleteChannel}>
 						Delete
 					</button>
