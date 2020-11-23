@@ -1,0 +1,11 @@
+.InfoPage .centerForm {
+	max-width: 26rem;
+}
+
+.InfoPage p {
+	border: 1px solid #000;
+	border-radius: 0.3rem;
+	background: #0002;
+	padding: 0.6rem;
+	margin-bottom: 0;
+}

@@ -53,7 +53,7 @@ class ControlPage extends React.Component {
 		// Received a message from the server
 		this.ws.onmessage = (event) => {
 			var message = event.data;
-			console.log('Received:', JSON.parse(message));
+			console.log('Received:', message);
 			this.addMessage(message);
 		};
 

@@ -5,8 +5,6 @@ import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
-	Redirect,
-	// Link
 } from "react-router-dom";
 
 import './App.css';
@@ -17,6 +15,7 @@ import SignInPage from '../SignInPage/SignInPage';
 import SignUpPage from '../SignUpPage/SignUpPage';
 import ManagePage from '../ManagePage/ManagePage';
 import ControlPage from '../ControlPage/ControlPage';
+import InfoPage from '../InfoPage/InfoPage';
 
 function App() {
 	return (
@@ -30,9 +29,7 @@ function App() {
 					<Route path='/signup' component={SignUpPage} />
 					<Route path='/manage' component={ManagePage} />
 					<Route path='/control' component={ControlPage} />
-					<Route path='/'>
-						<Redirect to='/signin' />
-					</Route>
+					<Route path='/' component={InfoPage} />
 				</Switch>
 			</div>
 		</Router>
