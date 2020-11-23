@@ -8,7 +8,7 @@ import sys
 from aioconsole import ainput  # Async input
 
 # Setup
-server = 'ws://localhost:3000/ws'
+server = 'wss://socketconnector.com/ws'
 channel_key = ''  # Your key here
 
 # Make sure key was added
