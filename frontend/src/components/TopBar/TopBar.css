@@ -14,10 +14,11 @@
 }
 
 .TopBar .title {
-	width: 11rem;
-	padding: 0.5rem;
+	/* width: 11rem; */
+	/* padding: 0.5rem; */
 	font-weight: bold;
 	font-size: large;
+	line-height: 2.1rem;
 	color: #fff;
 	background-color: #00000088;
 	border-radius: 0.3rem;
@@ -43,7 +44,8 @@
 .TopBar .TopBarButton {
 	margin-right: 0.25rem;
 	height: 2.1rem;
-	width: 4rem;
+	/* width: 4.5rem; */
+	white-space: nowrap;
 	color: #fff;
 	background-color: #00000033;
 	border: 1px solid #fff;
